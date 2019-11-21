@@ -9,7 +9,8 @@
 
 
 .post-card {
-    width: 100% !important;
+    width: 84% !important;
+    margin: auto !important;
 }
 
 .post-content {

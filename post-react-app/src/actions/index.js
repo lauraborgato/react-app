@@ -9,8 +9,12 @@ export const fetchPosts = () => async dispatch => {
 };
 
 export const createPost = (formValues) => async (dispatch, getState) => {
-    const response = await backendApi.post('/api/posts', {
-        ...formValues, userId: getState.user.userId
+    console.log(getState().user.userId);
+    const response = await backendApi.post('/posts', {
+        headers: {
+            'Authorization': `Bearer ${getState().user.token}`
+        },
+        ...formValues, userId: getState().user.userId
     });
 
     dispatch({ type: ADD_POST, payload: response.data });

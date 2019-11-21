@@ -66,10 +66,10 @@ class PostForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error" encType="multipart/form-data">
-                <Field name="title" component={this.renderInput} label="Enter Title" type="text" />
-                <Field name="description" component={this.renderInput} label="Enter Description" type="text" />
+                <Field name="postTitle" component={this.renderInput} label="Enter Title" type="text" />
+                <Field name="postContent" component={this.renderInput} label="Enter Description" type="text" />
                 <img src={this.state.file} className="ui big image"/>
-                <Field name="attachment" component={this.FileInput} type="file" />
+                <Field name="postImage" component={this.FileInput} type="file" />
                 <button className="ui button primary">Submit</button>
             </form>
         );
