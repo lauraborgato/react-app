@@ -4,6 +4,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import history from '../history';
 import Login from './Login';
 import PostList from './PostList';
+import NewPost from './NewPost';
 
 const App = () => {
     return (
@@ -14,7 +15,7 @@ const App = () => {
                     <Switch>
                         <Route path="/" exact component={PostList}></Route>
                         <Route path="/login" component={Login} />
-                        
+                        <Route path="/new" component={NewPost}/>
                     </Switch>
             </div>
             </Router>

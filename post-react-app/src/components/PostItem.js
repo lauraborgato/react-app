@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Accordion, Icon, Header } from 'semantic-ui-react';
+import { Accordion, Icon, Header, Card, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './PostItem.css';
 
@@ -15,13 +15,11 @@ export default class PostItem extends Component {
     }
 
     renderAdmin(post) {
-        console.log(post.userId);
-        console.log(this.props.userId);
-        if (this.props.userId === post.userId) {
+        if (this.props.user && this.props.user.userId === post.userId) {
             return (
-                <div className="right floated content">
-                    <Link className="ui button primary" to={`streams/edit/${post._id}`}>Edit</Link>
-                    <Link className="ui button negative" to={`streams/delete/${post._id}`}>Delete</Link>
+                <div className="right floated content align-center">
+                    <Link className="ui button primary fixed-size" to={`posts/edit/${post._id}`}>Edit</Link>
+                    <Link className="ui button negative fixed-size" to={`posts/delete/${post._id}`}>Delete</Link>
                 </div>
             );
         }
@@ -42,11 +40,16 @@ export default class PostItem extends Component {
                     </Header>
 
                 </Accordion.Title>
-                <Accordion.Content className="post-image" active={activeIndex === 0}>
-                    <p>
-                        {this.props.post.postContent}
-                    </p>
-                    <img src={this.props.post.imagePath} className="ui large image" />
+                <Accordion.Content className="post-content" active={activeIndex === 0}>
+                    <Card className="post-card">
+                        <Image src={this.props.post.imagePath} wrapped ui={false} />
+                        <Card.Content>
+                            <Card.Header>{this.props.post.postTitle}</Card.Header>
+                            <Card.Description>
+                                {this.props.post.postContent}
+                            </Card.Description>
+                        </Card.Content>
+                    </Card>
                     {this.renderAdmin(this.props.post)}
                 </Accordion.Content>
             </Accordion >

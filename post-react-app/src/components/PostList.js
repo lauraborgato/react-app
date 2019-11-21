@@ -13,7 +13,7 @@ class PostList extends React.Component {
     renderPostsList() {
         return this.props.posts.map((post, index) => {
             return (
-                <PostItem post={post} index={index} key={post._id} user={this.props.user}></PostItem>
+                <PostItem post={post} index={index} key={post._id} user={this.props.currentUser}></PostItem>
             );
         });
     }
@@ -39,12 +39,9 @@ class PostList extends React.Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.user);
     return {
-        posts: state.posts[0],
-        userId: state.user.length > 0 ? state.user[0].userId : null
-        //currentUserId: state.auth.userId,
-        //isSignedIn: state.auth.isSignedIn
+        posts: Object.values(state.posts),
+        currentUser: state.user
     }
 }
 
