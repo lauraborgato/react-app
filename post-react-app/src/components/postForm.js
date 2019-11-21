@@ -7,7 +7,6 @@ class PostForm extends React.Component {
         this.state = {
             file: null
         }
-        // this.handleChange = this.handleChange.bind(this)
     }
 
     adaptFileEventToValue = delegate => e => {
@@ -60,6 +59,7 @@ class PostForm extends React.Component {
     }
 
     onSubmit = (formValues) => {
+        console.log(formValues);
         this.props.onSubmit(formValues);
     }
 
@@ -68,8 +68,8 @@ class PostForm extends React.Component {
             <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error" encType="multipart/form-data">
                 <Field name="title" component={this.renderInput} label="Enter Title" type="text" />
                 <Field name="description" component={this.renderInput} label="Enter Description" type="text" />
+                <img src={this.state.file} className="ui big image"/>
                 <Field name="attachment" component={this.FileInput} type="file" />
-                <img src={this.state.file}/>
                 <button className="ui button primary">Submit</button>
             </form>
         );
