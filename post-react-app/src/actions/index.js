@@ -13,7 +13,6 @@ export const createPost = (formValues) => async (dispatch, getState) => {
     const postData = getPostData(formValues);
 
     const response = await backendApi.post('/posts', postData, { headers: { 'Authorization': `Bearer ${getState().user.token}` } });
-    console.log(response);
     dispatch({ type: ADD_POST, payload: response.data.post._doc });
 
     history.push('/');
@@ -34,14 +33,12 @@ export const editPost = (id, formValues) => async (dispatch, getState) => {
         };
       }
     const response = await backendApi.put(`/posts/${id}`, postData, { headers: { 'Authorization': `Bearer ${getState().user.token}` } });
-    console.log(response);
     dispatch({ type: EDIT_POST, payload: response.data.post });
 
     history.push('/');
 }
 
 export const loginUser = formValues => async dispatch => {
-    console.log(formValues);
     const now = new Date();
     const response = await backendApi.post(`/user/login`, { ...formValues });
     const authData = {
@@ -55,7 +52,7 @@ export const loginUser = formValues => async dispatch => {
 };
 
 export const logOut = () => {
-    return { type: LOGOUT };
+    return { type: LOGOUT, payload: null };
 }
 
 export const singUp = (email, password) => async dispatch => {
