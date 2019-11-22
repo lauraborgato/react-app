@@ -1,6 +1,6 @@
 import FormData from 'form-data';
 import backendApi from '../apis/backendApi';
-import { LOGIN, SIGNIN, FETCH_POSTS, LOGOUT, ADD_POST, EDIT_POST } from './actionTypes';
+import { LOGIN, SIGNIN, FETCH_POSTS, LOGOUT, ADD_POST, EDIT_POST, DELETE_POST } from './actionTypes';
 import history from '../history';
 
 export const fetchPosts = () => async dispatch => {
@@ -76,4 +76,10 @@ const getPostData = (formValues) => {
     postData.append('secondParam', 0);
     postData.append('postImage', formValues.postImage, formValues.postTitle);
     return postData;
+}
+
+export const deletePost = id => async (dispatch, getState) => {
+    await backendApi.delete(`/posts/${id}`, { headers: { 'Authorization': `Bearer ${getState().user.token}` } });
+    dispatch({ type: DELETE_POST, payload: id });
+    history.push('/');
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Accordion, Icon, Header, Card, Image, styled } from 'semantic-ui-react';
+import { Accordion, Icon, Header, Card, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './PostItem.css';
 
