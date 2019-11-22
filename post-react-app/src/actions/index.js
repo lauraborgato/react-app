@@ -1,5 +1,6 @@
+import FormData from 'form-data';
 import backendApi from '../apis/backendApi';
-import { LOGIN, SIGNIN, FETCH_POSTS, LOGOUT, ADD_POST } from './actionTypes';
+import { LOGIN, SIGNIN, FETCH_POSTS, LOGOUT, ADD_POST, EDIT_POST } from './actionTypes';
 import history from '../history';
 
 export const fetchPosts = () => async dispatch => {
@@ -9,18 +10,34 @@ export const fetchPosts = () => async dispatch => {
 };
 
 export const createPost = (formValues) => async (dispatch, getState) => {
-    console.log(getState().user.userId);
-    const response = await backendApi.post('/posts', {
-        headers: {
-            'Authorization': `Bearer ${getState().user.token}`
-        },
-        ...formValues, userId: getState().user.userId
-    });
+    const postData = getPostData(formValues);
 
-    dispatch({ type: ADD_POST, payload: response.data });
+    const response = await backendApi.post('/posts', postData, { headers: { 'Authorization': `Bearer ${getState().user.token}` } });
+    console.log(response);
+    dispatch({ type: ADD_POST, payload: response.data.post._doc });
 
     history.push('/');
+}
 
+export const editPost = (id, formValues) => async (dispatch, getState) => {
+    let postData;
+    if (typeof (formValues.postImage) === 'object') {
+        postData = getPostData(formValues);
+        postData.append('id', id);
+      } else {
+        postData = {
+          id: id,
+          postTitle: formValues.postTitle,
+          postContent: formValues.postContent,
+          imagePath: formValues.postImage,
+          userId: null
+        };
+      }
+    const response = await backendApi.put(`/posts/${id}`, postData, { headers: { 'Authorization': `Bearer ${getState().user.token}` } });
+    console.log(response);
+    dispatch({ type: EDIT_POST, payload: response.data.post });
+
+    history.push('/');
 }
 
 export const loginUser = formValues => async dispatch => {
@@ -47,4 +64,18 @@ export const singUp = (email, password) => async dispatch => {
         password
     });
     dispatch({ type: SIGNIN, payload: response.data });
+}
+
+const getPostData = (formValues) =>{
+    const postData = new FormData();
+    postData.append('postTitle', formValues.postTitle);
+    postData.append('postContent', formValues.postContent);
+    /**
+     * the three paramas is for axios to parse the image to a binary
+     */
+    postData.append('action', 'ADD');
+    postData.append('param', 0);
+    postData.append('secondParam', 0);
+    postData.append('postImage', formValues.postImage, formValues.postTitle);
+    return postData;
 }

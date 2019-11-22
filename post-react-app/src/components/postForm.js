@@ -64,11 +64,12 @@ class PostForm extends React.Component {
     }
 
     render() {
+        console.log(this.props);
         return (
             <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error" encType="multipart/form-data">
                 <Field name="postTitle" component={this.renderInput} label="Enter Title" type="text" />
                 <Field name="postContent" component={this.renderInput} label="Enter Description" type="text" />
-                <img src={this.state.file} className="ui big image"/>
+                <img name="imagePath" src={this.props.initialValues && !this.state.file ? this.props.initialValues.imagePath : this.state.file} className="ui big image" alt=""/>
                 <Field name="postImage" component={this.FileInput} type="file" />
                 <button className="ui button primary">Submit</button>
             </form>
