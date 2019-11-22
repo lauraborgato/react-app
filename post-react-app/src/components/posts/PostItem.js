@@ -1,21 +1,22 @@
 import React, { Component } from 'react'
-import { Accordion, Icon, Header, Card, Image } from 'semantic-ui-react';
+import { Accordion, Icon, Header, Card, Image, styled } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './PostItem.css';
 
-export default class PostItem extends Component {
-    state = { activeIndex: 1 }
+class PostItem extends Component {
+    state = { activeIndex: -1 }
 
     handleClick = (e, titleProps) => {
-        const { index } = titleProps
-        const { activeIndex } = this.state
-        const newIndex = activeIndex === index ? -1 : index
-
-        this.setState({ activeIndex: newIndex })
+      const { index } = titleProps
+      const { activeIndex } = this.state
+      const newIndex = activeIndex === index ? -1 : index
+  
+      this.setState({ activeIndex: newIndex })
     }
+  
 
     renderAdmin(post) {
-        if (this.props.user && this.props.user.userId === post.userId) {
+        if (this.props.isLoggedIn && this.props.user.userId === post.userId) {
             return (
                 <div className="right floated content align-center">
                     <Link className="ui button primary fixed-size" to={`posts/edit/${post._id}`}>Edit</Link>
@@ -28,10 +29,10 @@ export default class PostItem extends Component {
     render() {
         const { activeIndex } = this.state
         return (
-            <Accordion>
+            <Accordion styled style={{width:'100%'}}>
                 <Accordion.Title
-                    active={activeIndex === 0}
-                    index={0}
+                    active={activeIndex === this.props.index}
+                    index={this.props.index}
                     onClick={this.handleClick}
                 >
                     <Header as='h3'>
@@ -40,9 +41,9 @@ export default class PostItem extends Component {
                     </Header>
 
                 </Accordion.Title>
-                <Accordion.Content className="post-content" active={activeIndex === 0}>
+                <Accordion.Content className="post-content" active={activeIndex === this.props.index}>
                     <Card className="post-card">
-                        <Image src={this.props.post.imagePath} wrapped ui={false} />
+                        <Image src={this.props.post.imagePath} rounded wrapped ui={false} />
                         <Card.Content>
                             <Card.Header>{this.props.post.postTitle}</Card.Header>
                             <Card.Description>
@@ -56,3 +57,5 @@ export default class PostItem extends Component {
         )
     }
 }
+
+export default PostItem;

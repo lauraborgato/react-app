@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchPosts } from '../actions';
+import { fetchPosts } from '../../actions';
 import PostItem from './PostItem';
 
 class PostList extends React.Component {
@@ -13,7 +13,7 @@ class PostList extends React.Component {
     renderPostsList() {
         return this.props.posts.map((post, index) => {
             return (
-                <PostItem post={post} index={index} key={post._id} user={this.props.currentUser}></PostItem>
+                <PostItem post={post} index={index} key={post._id} user={this.props.currentUser} isLoggedIn={this.props.isLoggedIn}></PostItem>
             );
         });
     }
@@ -41,7 +41,8 @@ class PostList extends React.Component {
 const mapStateToProps = state => {
     return {
         posts: Object.values(state.posts),
-        currentUser: state.user
+        currentUser: state.user,
+        isLoggedIn: (state.user != null && state.user.expirationDate > new Date())
     }
 }
 

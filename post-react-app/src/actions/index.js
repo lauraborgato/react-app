@@ -23,15 +23,15 @@ export const editPost = (id, formValues) => async (dispatch, getState) => {
     if (typeof (formValues.postImage) === 'object') {
         postData = getPostData(formValues);
         postData.append('id', id);
-      } else {
+    } else {
         postData = {
-          id: id,
-          postTitle: formValues.postTitle,
-          postContent: formValues.postContent,
-          imagePath: formValues.postImage,
-          userId: null
+            id: id,
+            postTitle: formValues.postTitle,
+            postContent: formValues.postContent,
+            imagePath: formValues.postImage,
+            userId: null
         };
-      }
+    }
     const response = await backendApi.put(`/posts/${id}`, postData, { headers: { 'Authorization': `Bearer ${getState().user.token}` } });
     dispatch({ type: EDIT_POST, payload: response.data.post });
 
@@ -55,15 +55,16 @@ export const logOut = () => {
     return { type: LOGOUT, payload: null };
 }
 
-export const singUp = (email, password) => async dispatch => {
-    const response = await backendApi.post('user/singup', {
-        email,
-        password
+export const signUp = ({email, password}) => async dispatch => {
+    await backendApi.post('user/singup', {
+        email, password
     });
-    dispatch({ type: SIGNIN, payload: response.data });
+    history.push('/login');
+
+    dispatch({ type: SIGNIN });
 }
 
-const getPostData = (formValues) =>{
+const getPostData = (formValues) => {
     const postData = new FormData();
     postData.append('postTitle', formValues.postTitle);
     postData.append('postContent', formValues.postContent);

@@ -9,8 +9,9 @@
 
 
 .post-card {
-    width: 84% !important;
+    width: 59% !important;
     margin: auto !important;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5) !important;
 }
 
 .post-content {
@@ -19,6 +20,7 @@
 
 .align-center {
     text-align: center;
+    margin-top: 2rem;
 }
 
 .fixed-size{

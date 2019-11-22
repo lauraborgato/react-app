@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import { fetchPosts, editPost } from '../actions';
+import { fetchPosts, editPost } from '../../actions';
 import PostForm from './postForm';
 
 class EditPost extends React.Component {

@@ -1,11 +1,12 @@
 import React from 'react';
-import Head from './Head';
 import { Router, Route, Switch } from 'react-router-dom';
+import Head from './Head';
 import history from '../history';
 import Login from './Login';
-import PostList from './PostList';
-import NewPost from './NewPost';
-import EditPost from './EditPost';
+import PostList from './posts/PostList';
+import NewPost from './posts/NewPost';
+import EditPost from './posts/EditPost';
+import SignUp from './SignUp';
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                     <Switch>
                         <Route path="/" exact component={PostList}></Route>
                         <Route path="/login" component={Login} />
+                        <Route path="/signup" component={SignUp} />
                         <Route path="/new" component={NewPost} />
                         <Route path="/posts/edit/:id" component={EditPost}></Route>
                     </Switch>
